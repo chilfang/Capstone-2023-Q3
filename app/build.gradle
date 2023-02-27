@@ -34,6 +34,13 @@ android {
         viewBinding true
         dataBinding true
     }
+    sourceSets {
+        main {
+            res {
+                srcDirs 'src\\main\\res', 'src\\main\\res\\layout\\pieces'
+            }
+        }
+    }
 }
 
 dependencies {

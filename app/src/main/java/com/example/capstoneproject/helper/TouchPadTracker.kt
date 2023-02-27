@@ -32,6 +32,7 @@ class TouchPadTracker(var startEvent: MotionEvent, var fragment: GameScreen) {
         touchPadImage!!.id = View.generateViewId()
         fragment.binding!!.layout.addView(touchPadImage)
         touchPadImage!!.setImageResource(R.drawable.pad)
+        touchPadImage!!.alpha = 0.5f
 
         val constraintSet = ConstraintSet()
         constraintSet.clone(fragment.binding!!.layout)

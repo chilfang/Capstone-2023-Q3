@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     var fragment: Fragment? = null
 
     val deadZone = 0.10
-    val speedMultiplier = 20
-    val maxSpeed = 20
+    val speedMultiplier = 15
+    val maxSpeed = speedMultiplier
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
@@ -45,17 +45,20 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             MotionEvent.ACTION_DOWN -> {
                 touchPadTracker = TouchPadTracker(event, (fragment as GameScreen))
                 touchPadTracker.openPad {
-                    if (touchPadTracker.xResult > deadZone) {
+                    if (touchPadTracker.xResult > deadZone) { //left/right
                         characterTracker.x += min((touchPadTracker.xResult * speedMultiplier).toInt(), maxSpeed)
                     } else if (touchPadTracker.xResult < -deadZone) {
                         characterTracker.x -= min((abs(touchPadTracker.xResult) * speedMultiplier).toInt(), maxSpeed)
                     }
 
-                    if (touchPadTracker.yResult > deadZone) {
+                    /* NOT NEEDED
+                    if (touchPadTracker.yResult > deadZone) { //up/down
                         characterTracker.y += min((touchPadTracker.yResult * speedMultiplier).toInt(), maxSpeed)
                     } else if (touchPadTracker.yResult < -deadZone) {
                         characterTracker.y -= min((abs(touchPadTracker.yResult) * speedMultiplier).toInt(), maxSpeed)
                     }
+                    */
+
 
                     characterTracker.update()
                 }

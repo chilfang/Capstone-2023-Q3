@@ -13,12 +13,14 @@ import androidx.fragment.app.activityViewModels
 import com.example.capstoneproject.MainActivity
 import com.example.capstoneproject.databinding.FragmentGameScreenBinding
 import com.example.capstoneproject.helper.CharacterTracker
+import com.example.capstoneproject.helper.Timer
 import com.example.capstoneproject.viewmodel.GameViewModel
 
 
 class GameScreen : Fragment() {
     var binding: FragmentGameScreenBinding? = null
     private val sharedViewModel: GameViewModel by activityViewModels()
+    private lateinit var looper: Timer
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -44,12 +46,27 @@ class GameScreen : Fragment() {
             viewModel = sharedViewModel
             gameScreenFragment = this@GameScreen
         }
+
+        looper = Timer {
+
+        }
+
+        looper.delay = 33
+
+        looper.start()
+        var location = IntArray(2)
+        binding!!.dot.getLocationInWindow(location)
+        var location2 = IntArray(2)
+        binding!!.startPlatform.getLocationOnScreen(location2)
+        Log.w("collision", location[0].toString() + " " + location[1].toString())
+        Log.w("collision", location[0].toString() + " " + location[1].toString())
     }
 
 
     override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
         (activity as MainActivity).touchPadActive = false
+        looper.stop()
+        binding = null
+        super.onDestroyView()
     }
 }
