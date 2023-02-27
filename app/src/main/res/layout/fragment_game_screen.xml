@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="164dp"
-            android:layout_marginTop="303dp"
+            android:layout_marginTop="300dp"
             android:scaleX="0.5"
             android:scaleY="0.5"
             android:src="@drawable/dot_green"
@@ -32,28 +32,29 @@
             tools:ignore="ContentDescription,ImageContrastCheck" />
 
         <LinearLayout
+            android:id="@+id/pieces"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/pieces"
-            android:gravity="center|bottom">
+            android:backgroundTint="#CF2626"
+            android:gravity="center|bottom"
+            android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/piece_start"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/piece_start">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/startPlatform"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="244dp"
+                    android:scaleY="0.3"
                     android:src="@drawable/block_yellow"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:scaleY="0.3" />
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 

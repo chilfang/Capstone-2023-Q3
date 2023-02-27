@@ -10,6 +10,8 @@ class CharacterTracker(var movementTarget: ImageView, var layout: ConstraintLayo
     var x = movementTarget.marginLeft
     var y = movementTarget.marginTop
 
+    var yMomentum = 0.0F
+
     fun update() {
         val constraintSet = ConstraintSet()
         constraintSet.clone(layout)

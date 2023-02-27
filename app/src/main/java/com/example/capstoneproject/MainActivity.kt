@@ -11,7 +11,6 @@ import android.view.MotionEvent
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.capstoneproject.databinding.FragmentGameScreenBinding
 import com.example.capstoneproject.fragments.GameScreen
 import com.example.capstoneproject.helper.CharacterTracker
 import com.example.capstoneproject.helper.TouchPadTracker
@@ -25,9 +24,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     lateinit var touchPadTracker: TouchPadTracker
     var fragment: Fragment? = null
 
-    val deadZone = 0.10
-    val speedMultiplier = 15
-    val maxSpeed = speedMultiplier
+    var deadZone = 0.0 //defined in GameScreen.kt
+    var speedMultiplier = 0 //defined in GameScreen.kt
+    var maxSpeed = 0 //defined in GameScreen.kt
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
@@ -45,23 +44,25 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             MotionEvent.ACTION_DOWN -> {
                 touchPadTracker = TouchPadTracker(event, (fragment as GameScreen))
                 touchPadTracker.openPad {
-                    if (touchPadTracker.xResult > deadZone) { //left/right
+                    if (touchPadTracker.xResult > deadZone) { //left
                         characterTracker.x += min((touchPadTracker.xResult * speedMultiplier).toInt(), maxSpeed)
-                    } else if (touchPadTracker.xResult < -deadZone) {
+                    } else if (touchPadTracker.xResult < -deadZone) { //right
                         characterTracker.x -= min((abs(touchPadTracker.xResult) * speedMultiplier).toInt(), maxSpeed)
                     }
 
-                    /* NOT NEEDED
-                    if (touchPadTracker.yResult > deadZone) { //up/down
+                    /*// NOT NEEDED
+                    if (!(fragment as GameScreen).isDotColliding() && touchPadTracker.yResult > deadZone) { //down
                         characterTracker.y += min((touchPadTracker.yResult * speedMultiplier).toInt(), maxSpeed)
-                    } else if (touchPadTracker.yResult < -deadZone) {
+                    } else if (touchPadTracker.yResult < -deadZone) { //up
                         characterTracker.y -= min((abs(touchPadTracker.yResult) * speedMultiplier).toInt(), maxSpeed)
                     }
                     */
 
-
-                    characterTracker.update()
+                    if(touchPadTracker.yResult < -deadZone) {
+                        characterTracker.yMomentum = -2f
+                    }
                 }
+
             }
 
             MotionEvent.ACTION_MOVE -> {
