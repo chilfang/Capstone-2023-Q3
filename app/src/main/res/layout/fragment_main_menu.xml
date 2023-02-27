@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.MainMenu">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.capstoneproject.viewmodel.GameViewModel" />
+        <variable
+            name="mainMenuFragment"
+            type="com.example.capstoneproject.fragments.MainMenu" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/playButton"
+            android:layout_width="0dp"
+            android:layout_height="120sp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="100dp"
+            android:text="@string/play"
+            android:onClick="@{() -> mainMenuFragment.playGame()}"
+            android:textSize="34sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/shopButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:layout_marginEnd="50dp"
+            android:backgroundTint="#FFAA00"
+            android:text="@string/shop"
+            android:onClick="@{() -> mainMenuFragment.shop()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/playButton" />
+
+        <Button
+            android:id="@+id/logoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="72dp"
+            android:backgroundTint="#FF0000"
+            android:text="@string/logout"
+            android:onClick="@{() -> mainMenuFragment.logout()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/playButton" />
+
+        <TextView
+            android:id="@+id/pointsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/points(viewModel.points.toString())}"
+            app:layout_constraintBottom_toTopOf="@+id/shopButton"
+            app:layout_constraintEnd_toEndOf="@+id/shopButton" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
