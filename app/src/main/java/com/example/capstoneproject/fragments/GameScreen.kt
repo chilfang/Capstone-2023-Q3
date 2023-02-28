@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.ViewStub
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.capstoneproject.MainActivity
@@ -38,6 +39,7 @@ class GameScreen : Fragment() {
 
     var pieceLayouts = ArrayList<Int>()
     var colliders = ArrayList<ImageView>()
+    var activePieces = ArrayList<View>()
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -76,7 +78,7 @@ class GameScreen : Fragment() {
 
         addPiece(R.layout.piece_start).visibility = View.VISIBLE
 
-        for (i in 1..1) {
+        for (i in 1..3) {
             addPiece(pieceLayouts[Random().nextInt(pieceLayouts.size)])
         }
 
@@ -139,6 +141,23 @@ class GameScreen : Fragment() {
         for (view in foundViews) {
             colliders.add(view as ImageView)
         }
+
+
+        if (activePieces.size > 0) {
+            val constraintSet = ConstraintSet()
+            constraintSet.clone(binding!!.pieces)
+            constraintSet.connect(inflatedPiece.id, ConstraintSet.START, activePieces.get(activePieces.size - 1).id, ConstraintSet.START, 0)
+            constraintSet.connect(inflatedPiece.id, ConstraintSet.BOTTOM, activePieces.get(activePieces.size - 1).id, ConstraintSet.TOP, 0)
+            constraintSet.applyTo(binding!!.pieces)
+        } else {
+            val constraintSet = ConstraintSet()
+            constraintSet.clone(binding!!.pieces)
+            constraintSet.connect(inflatedPiece.id, ConstraintSet.START, binding!!.pieces.id, ConstraintSet.START, 0)
+            constraintSet.connect(inflatedPiece.id, ConstraintSet.BOTTOM, binding!!.pieces.id, ConstraintSet.BOTTOM, 0)
+            constraintSet.applyTo(binding!!.pieces)
+        }
+
+        activePieces.add(inflatedPiece)
 
         return inflatedPiece
 
