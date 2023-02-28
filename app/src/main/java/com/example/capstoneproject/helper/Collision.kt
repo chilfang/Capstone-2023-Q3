@@ -1,5 +1,6 @@
 package com.example.capstoneproject.helper
 
+import android.util.Log
 import android.widget.ImageView
 import kotlin.math.max as Max
 import kotlin.math.min as Min

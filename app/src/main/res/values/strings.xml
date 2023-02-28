@@ -11,4 +11,6 @@
     <string name="logout">Logout</string>
     <string name="shop">Shop</string>
     <string name="points">%1$s Points</string>
+    <string name="platform">platform</string>
+    <string name="back">Back</string>
 </resources>

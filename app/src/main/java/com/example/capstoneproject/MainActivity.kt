@@ -58,8 +58,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     }
                     */
 
-                    if(touchPadTracker.yResult < -deadZone) {
+                    if(touchPadTracker.yResult < -deadZone * 10 && (fragment as GameScreen).jumpAvailable) {
+                        Log.w("Jump", (fragment as GameScreen).jumpAvailable.toString())
                         characterTracker.yMomentum = -2f
+                        (fragment as GameScreen).jumpAvailable = false
                     }
                 }
 
