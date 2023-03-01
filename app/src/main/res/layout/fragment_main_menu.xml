@@ -60,6 +60,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{@string/points(viewModel.points.toString())}"
+            android:textColor="#000000"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/shopButton"
             app:layout_constraintEnd_toEndOf="@+id/shopButton" />
     </androidx.constraintlayout.widget.ConstraintLayout>

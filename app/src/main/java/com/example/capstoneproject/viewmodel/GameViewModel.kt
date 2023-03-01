@@ -13,4 +13,8 @@ class GameViewModel : ViewModel() {
     init {
         _points.value = 0
     }
+
+    fun addPoints(input: Int) {
+        _points.value = _points.value?.plus(input)
+    }
 }

@@ -11,8 +11,10 @@ import android.view.ViewStub
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.capstoneproject.MainActivity
 import com.example.capstoneproject.R
 import com.example.capstoneproject.databinding.FragmentGameScreenBinding
@@ -40,6 +42,9 @@ class GameScreen : Fragment() {
     var pieceLayouts = ArrayList<Int>()
     var colliders = ArrayList<ImageView>()
     var activePieces = ArrayList<View>()
+
+    var stageLowerCooldown = true
+    var lifetimeCounter = 0
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -83,6 +88,8 @@ class GameScreen : Fragment() {
         }
 
         loop = Timer {
+            lifetimeCounter++
+
             if (!isDotColliding()) { //in air
                 characterTracker.yMomentum += 0.1F
             } else { // on a platform
@@ -92,8 +99,23 @@ class GameScreen : Fragment() {
 
             characterTracker.y += min((characterTracker.yMomentum * speedMultiplier).toInt(), maxSpeed)
 
+            if (stageLowerCooldown) {
+                val constraintSet = ConstraintSet()
+                constraintSet.clone(binding!!.pieces)
+                constraintSet.connect(activePieces[0].id, ConstraintSet.BOTTOM, binding!!.pieces.id, ConstraintSet.BOTTOM, activePieces[0].marginBottom - 1)
+                constraintSet.applyTo(binding!!.pieces)
+
+                stageLowerCooldown = false
+            } else {
+                stageLowerCooldown = true
+            }
 
             characterTracker.update()
+
+            if (characterTracker.y > 1900) {
+                sharedViewModel.addPoints(lifetimeCounter)
+                findNavController().navigate(R.id.action_gameScreen_to_mainMenu)
+            }
         }
 
         loop.delay = 33

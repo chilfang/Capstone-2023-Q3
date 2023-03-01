@@ -9,10 +9,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.capstoneproject.BaseApplication
 import com.example.capstoneproject.R
 import com.example.capstoneproject.databinding.FragmentMainMenuBinding
 import com.example.capstoneproject.databinding.FragmentTitleScreenBinding
 import com.example.capstoneproject.viewmodel.GameViewModel
+import com.example.capstoneproject.viewmodel.LoginViewModel
+import com.example.capstoneproject.viewmodel.LoginViewModelFactory
 
 /**
  * A simple [Fragment] subclass.
@@ -22,7 +25,13 @@ import com.example.capstoneproject.viewmodel.GameViewModel
 class TitleScreen : Fragment() {
     private var binding: FragmentTitleScreenBinding? = null
     private val sharedViewModel: GameViewModel by activityViewModels()
-
+    
+    
+    private val viewModel: LoginViewModel by activityViewModels {
+        LoginViewModelFactory(
+            (activity?.application as BaseApplication).database.LoginDao()
+        )
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,7 +50,6 @@ class TitleScreen : Fragment() {
             viewModel = sharedViewModel
             titleScreenFragment = this@TitleScreen
         }
-
     }
 
     fun goToNextScreen() {
